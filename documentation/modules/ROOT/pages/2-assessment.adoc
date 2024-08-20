@@ -9,7 +9,7 @@ The goal of this lab is to assess the current application portfolio and identify
 
 == 2.1. Access the MTA Web Console
 
-To start the assessment of the existing applications we will use the https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/6.0/html-single/introduction_to_the_migration_toolkit_for_applications/index[Migration Toolkit for Applications (MTA)^]. We will use _MTA_ to assess the `Customers` service based on the _Tomcat_ server on Red Hat Virtualization.
+To start the assessment of the existing applications we will use the https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/7.0/html-single/introduction_to_the_migration_toolkit_for_applications/index[Migration Toolkit for Applications (MTA)^]. We will use _MTA_ to assess the `Customers` service based on the _Tomcat_ server on Red Hat Virtualization.
 
 Open a new browser to access the https://mta-mta-%USERID%.%SUBDOMAIN%[MTA Web Console^].
 
