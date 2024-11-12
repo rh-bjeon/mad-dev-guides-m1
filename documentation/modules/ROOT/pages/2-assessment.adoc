@@ -1,209 +1,205 @@
-= 2. Assessment - 25 minutes
+= 2. 평가 - 25분
 :imagesdir: ../assets/images
 
-== Goals of this lab
+== 이 랩의 목표
 
-As part of Globex's digital transformation and cloud adoption initiative, the development and devops teams embarked upon a journey to modernize their existing siloed services running on virtual machines on Red Hat Virtualization and containerized applications on Red Hat OpenShift separately.
+Globex의 디지털 혁신 및 클라우드 도입 이니셔티브의 일환으로, 개발 및 DevOps 팀은 Red Hat Virtualization의 가상 머신에서 실행되는 기존의 사일로화된 서비스와 Red Hat OpenShift의 컨테이너화된 애플리케이션을 별도로 현대화하는 여정을 시작했습니다.
 
-The goal of this lab is to assess the current application portfolio and identify potential issues and risks to implementing advanced cloud-native architectures with application modernization.
+이 랩의 목표는 현재 애플리케이션 포트폴리오를 평가하고 애플리케이션 현대화를 통해 고급 클라우드 네이티브 아키텍처를 구현하는 데 잠재적인 문제와 위험을 파악하는 것입니다.
 
-== 2.1. Access the MTA Web Console
+== 2.1. MTA 웹 콘솔에 액세스
 
-To start the assessment of the existing applications we will use the https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/7.0/html-single/introduction_to_the_migration_toolkit_for_applications/index[Migration Toolkit for Applications (MTA)^]. We will use _MTA_ to assess the `Customers` service based on the _Tomcat_ server on Red Hat Virtualization.
+기존 애플리케이션의 평가를 시작하기 위해 https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/7.0/html-single/introduction_to_the_migration_toolkit_for_applications/index[Migration Toolkit for Applications (MTA)^]를 사용합니다. _MTA_ 를 사용하여 Red Hat Virtualization의 _Tomcat_ 서버를 기반으로 하는 `Customers` 서비스를 평가합니다.
 
-Open a new browser to access the https://mta-mta-%USERID%.%SUBDOMAIN%[MTA Web Console^].
+https://mta-mta-%USERID%.%SUBDOMAIN%[MTA 웹 콘솔^]에 액세스하려면 새 브라우저를 엽니다.
 
-You will see existing application inventories such as *Customers*, *Orders*, *Inventory*, and more.
+*Customers*, *Orders*, *Inventory* 등 기존 애플리케이션 인벤토리를 볼 수 있습니다.
 
 image::application-inventory.png[application inventory]
 
-**MTA Application Inventory** is the vehicle which selects applications for assessment by https://github.com/konveyor/tackle-pathfinder[Tackle Pathfinder^] and analysis by https://github.com/windup/[Windup^]. It provides users four main functions:
+**MTA Application Inventory**는 https://github.com/konveyor/tackle-pathfinder[Tackle Pathfinder^]를 통해 평가하고 https://github.com/windup/[Windup^]을 통해 분석할 애플리케이션을 선택하는 수단입니다. 사용자에게 네 가지 주요 기능을 제공합니다.
 
-* Maintain a portfolio of applications.
-* Link applications to the business services they support.
-* Define interdependencies.
-* Add metadata using an extensible tagging model to describe and categorize applications in multiple dimensions.
+* 애플리케이션 포트폴리오를 유지 관리합니다.
+* 해당 애플리케이션을 지원하는 비즈니스 서비스에 연결합니다.
+* 상호의존성을 정의합니다.
+* 확장 가능한 태그 모델을 사용하여 메타데이터를 추가하고 여러 방면에서 애플리케이션을 설명하고 분류합니다.
 
-**Tackle Pathfinder** is an interactive questionnaire based tool that assesses the suitability of applications for modernization in order to deploy them into containers on an enterprise Kubernetes platform. The tool output includes:
+**Tackle Pathfinder**는 엔터프라이즈 Kubernetes 플랫폼의 컨테이너에 배포하기 위해 애플리케이션의 현대화 적합성을 평가하는 대화형 설문지 기반 도구입니다. 평가 후 출력되는 내용에는 다음이 포함됩니다.
 
-* An application's suitability for containerization and Kubernetes
-* A prioritized list of associated risks (based on answers to the questionnaire)
-* An Adoption plan with the application's prioritization, business criticality and dependencies.
+* 컨테이너화 및 Kubernetes에 대한 애플리케이션의 적합성
+* 설문지 답변을 기반으로 한 관련 위험의 우선순위 목록
+* 애플리케이션의 우선 순위, 비즈니스 중요도 및 종속성을 포함한 도입 계획
 
-**Migration Waves management** is a small collection of workloads that deliver business value. MTA’s Migration Wave groups applications to be migrated on a specified schedule. In addition, a migration wave enables you to export a list of the wave’s applications to the Jira issue management system. This automatically creates a separate Jira issue for each application of the migration wave for tracking.
+**마이그레이션 웨이브 관리(Migration Waves management)**는 비즈니스 가치를 제공하는 소규모 워크로드 컬렉션입니다. MTA의 마이그레이션 웨이브는 지정된 일정에 따라 마이그레이션할 애플리케이션을 그룹화합니다. 또한 마이그레이션 웨이브를 사용하면 웨이브의 애플리케이션 목록을 Jira 이슈 관리 시스템으로 내보낼 수 있습니다. 이렇게 하면 추적을 위해 마이그레이션 웨이브의 각 애플리케이션에 대해 별도의 Jira 이슈가 자동으로 생성됩니다.
 
-For more information, see https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/7.0/html/user_interface_guide/working-with-applications-in-the-ui#mta-web-creating-migration-waves_user-interface-guide[Creating migration waves^] and https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/7.0/html/user_interface_guide/working-with-applications-in-the-ui#mta-web-creating-jira-issues-for-migration-wave_user-interface-guide[Creating Jira issues for a migration wave^].
+자세한 내용은 https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/7.0/html/user_interface_guide/working-with-applications-in-the-ui#mta-web-creating-migration-waves_user-interface-guide[마이그레이션 웨이브 생성^] 및 https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/7.0/html/user_interface_guide/working-with-applications-in-the-ui#mta-web-creating-jira-issues-for-migration-wave_user-interface-guide[마이그레이션 웨이브에 대한 Jira 이슈 생성^]을 참조하세요.
 
-== 2.2. Controls
+== 2.2. 컨트롤(Controls)
 
-*Controls* are a collection of entities that add value to Application Inventory and the Pathfinder assessment. They comprise _business services_, _stakeholders_, _stakeholder groups_, _job functions_, _tag types_, and _tags_.
+*컨트롤(Controls)* 은 Application Inventory와 Pathfinder 평가에 가치를 더하는 엔터티 모음입니다. 여기에는 _비즈니스 서비스_, _이해 관계자_, _이해 관계자 그룹_, _직무 기능_, _태그 유형_, _태그_ 가 포함됩니다.
 
-These controls provide useful metadata about the relationships between applications and their business stakeholders, and can be used to optimize a modernization plan across a portfolio.
+이러한 컨트롤(Controls)의 기능은 애플리케이션과 비즈니스 이해 관계자 간의 관계에 대한 유용한 메타데이터를 제공하며, 포트폴리오 전반에 걸쳐 현대화 계획을 최적화하는 데 사용할 수 있습니다.
 
-=== 2.2.1. Stakeholders
+=== 2.2.1. 이해관계자(Stakeholders)
 
-Go to `Controls` on the left menu and you will see existing _stakeholders_ such as *Hank Scorpio* and *Homer Simpson*.
+왼쪽 메뉴에서 `Controls` 로 가면 *Hank Scorpio* 와 *Homer Simpson* 같은 기존 _이해관계자(Stakeholders)_ 를 볼 수 있습니다.
 
 image::mta-control-stakeholder.png[stakeholders]
 
-You can also find the existing _stakeholder groups_ such as *IT Management* and *Retail Management* for the application assessment.
+또한, 애플리케이션 평가를 위해 *IT 관리* 및 *소매 관리* 와 같은 기존의 _이해관계자 그룹(stakeholder groups)_ 을 찾을 수 있습니다.
 
 image::mta-stakeholder-groups.png[stakeholder-groups]
 
-=== 2.2.2. Business services
+=== 2.2.2. 비즈니스 서비스(Business services)
 
-Applications can be classified and grouped in multiple ways such as **business service**. We've created a business service for the legacy `Retail` applications.
+애플리케이션은 **비즈니스 서비스**와 같이 여러 가지 방법으로 분류 및 그룹화할 수 있습니다. 우리는 레거시 `Retail` 애플리케이션에 대한 비즈니스 서비스를 만들었습니다.
 
-Go to `Controls` on the left menu and click on _Business services_ tab. You will see existing _business services_ such as *Finance and HR* and *Retail*.
+왼쪽 메뉴에서 `Controls` 로 가서 _Business services_ 탭을 클릭하세요. *Finance and HR* 과 *Retail* 과 같은 기존 _business services_ 가 보일 것입니다.
 
 image::mta-control-business-service.png[business service]
 
-== 2.3. Application inventory
+== 2.3. 애플리케이션 인벤토리(Application inventory)
 
-Let's focus on the legacy application. We have added tags that represent its technology such as `Java`, `Tomcat` and `PostgreSQL`, and decided to add a custom tag type that allows us to identify which custom architecture libraries are used by each application.
+레거시 애플리케이션에 집중해 보겠습니다. `Java`, `Tomcat`, `PostgreSQL` 과 같이 해당 기술을 나타내는 태그를 추가했고, 각 애플리케이션에서 어떤 사용자 정의 아키텍처 라이브러리를 사용하는지 식별할 수 있는 사용자 정의 태그 유형을 추가하기로 했습니다.
 
-Go to `Application inventory` on the left menu in the *Migration* perspective and click on `tag` icon for the customers application.
+*Migration* 관점의 왼쪽 메뉴에서 `Application inventory` 로 이동하여 customers 애플리케이션의 `tag` 아이콘을 클릭합니다.
 
 image::app-inventory-landing.png[app-inventory-landing]
 
-It shows 10 tags.
+태그 10개가 표시됩니다.
 
 image::mta-customer-tags.png[mta-customer-tags]
 
-Click on `x` button.
+`x` 버튼을 클릭하세요.
 
-== 2.4. Archetypes
+== 2.4. 아키타입(Archetypes)
 
-When dealing with applications at scale, a more sophisticated way of grouping applications together might be required to manage large portfolios effectively. **Archetypes** allow exactly that by automatically classifying applications based on their tag taxonomy. At the same time, applications associated with an archetype inherit some of their features such as additional tags or assessment data.
+대규모 애플리케이션을 다룰 때, 대규모 포트폴리오를 효과적으로 관리하기 위해 애플리케이션을 그룹화하는 보다 정교한 방법이 필요할 수 있습니다. **아키타입**은 태그 택소노미에 따라 애플리케이션을 자동으로 분류하여 정확히 이를 허용합니다. 동시에, 아키타입과 연관된 애플리케이션은 추가 태그나 평가 데이터와 같은 일부 기능을 상속합니다.
 
 image::mta-archetypes.png[archetypes]
 
-Click on the `Summer Framework` archetype to learn more about how archetypes work. This will open the _Archetype Profile_ side drawer that contains important information about the archetype:
+`Summer Framework` 아키타입을 클릭하여 아키타입의 작동 방식에 대해 자세히 알아보세요. 그러면 아키타입에 대한 중요한 정보가 들어 있는 _Archetype Profile_ 사이드 탭이 열립니다.
 
 image::mta-archetypes-summer.png[archetypes]
 
-This archetype has been modeled to cover all traditional Spring applications in the organization, so we can centralize their management. Let's discuss the fields we can find in archetypes:
+이 아키타입은 조직의 모든 기존 Spring 애플리케이션을 포괄하도록 모델링되었으므로 관리를 중앙화할 수 있습니다. 아키타입에서 찾을 수 있는 필드에 대해 논의해 보겠습니다.
 
-* Applications that match all the criteria tags will get automatically associated to the archetype. In this case, all applications that have the _Spring_, _Spring MVC_ and _Spring Data_ tags will be associated to the _Summer Framework_ archetype. That is the case of our _Customers_ application.
-* Archetype tags are the tags that will be inherited by applications just for the fact of being associated to the current archetype. These are a way to store metadata about applications at scale. In this case we have associated a dedicated tag for the framework (_Summer Framework_) and information about the runtime (_Tomcat_).
-* Archetypes often refer to corporate architectures or frameworks that are maintained by some department or team inside the organization. Archetypes also allow to document who are relevant stakeholders associated to them. We can see that the _Summer Framework_ is being maintained by Sanaa Cantu, Lena Bentley and Olumide Themba, alongside the IT Management group.
+* 모든 기준 태그와 일치하는 애플리케이션은 자동으로 아키타입에 연결됩니다. 이 경우 _Spring_, _Spring MVC_ 및 _Spring Data_ 태그가 있는 모든 애플리케이션은 _Summer Framework_ 아키타입에 연결됩니다. 이는 _Customers_ 애플리케이션의 경우입니다.
+* 아키타입 태그는 현재 아키타입과 연관되어 있다는 사실만으로 애플리케이션에서 상속되는 태그입니다. 이는 대규모 애플리케이션에 대한 메타데이터를 저장하는 방법입니다. 이 경우 프레임워크(_Summer Framework_)에 대한 전용 태그와 런타임(_Tomcat_)에 대한 정보를 연관시켰습니다.
+* 아키타입은 종종 조직 내부의 일부 부서나 팀에서 유지관리하는 기업 아키텍처나 프레임워크를 말합니다. 아키타입은 또한 아키타입과 관련된 관련 이해 관계자를 문서화할 수 있도록 합니다. _Summer Framework_ 는 IT 관리 그룹과 함께 Sanaa Cantu, Lena Bentley, Olumide Themba가 유지 관리하고 있음을 알 수 있습니다.
 
-On the _Applications_ section of the _Archetype Profile_ drawer you can see a link that reads `2 applications`. Click on it and you will navigate back to the _Application Inventory_ with preapplied filters to display all applications associated with the _Summer Framework_ archetype. Clicking on the Customers application reveals that it has been associated to the _Summer Framework_ archetype in the _Archetypes_ section from the _Application Profile_.
+_Archetype Profile_ 탭의 _Applications_ 섹션에서 `2 applications` 라고 적힌 링크를 볼 수 있습니다. 이를 클릭하면 _Summer Framework_ 아키타입과 연관된 모든 애플리케이션을 표시하는 사전 적용된 필터가 있는 _Application Inventory_ 로 돌아갑니다. Customers 애플리케이션을 클릭하면 _Application Profile_ 의 _Archetypes_ 섹션에서 _Summer Framework_ 아키타입과 연관되었음을 알 수 있습니다.
 
 image::mta-archetypes-inventory-customers.png[inventory]
 
-Given the association, the application should have inherited the Archetype tags from the Summer Framework archetype. Click on the `Tags` tab from the *Application Profile* and filter by Archetype. You should see the tags _Summer Framework_ and _Tomcat_.
+연관성을 감안하면, 애플리케이션은 Summer Framework 아키타입에서 아키타입 태그를 상속했어야 합니다. *Application Profile* 에서 `Tags` 탭을 클릭하고 아키타입으로 필터링합니다. _Summer Framework_ 및 _Tomcat_ 태그가 표시되어야 합니다.
 
 image::mta-archetypes-inventory-customers-tags.png[inventory]
 
-== 2.5. Assess the Summer Framework archetype
+== 2.5. Summer Framework 아키타입 평가
 
-The **Assessment module** provides a high level overview of a given application or archetype through the usage of questionnaires. The tool ships with a _Containerization_ questionnaire out of the box, with more curated questionnaires coming up in subsequent releases. The _Containerization_ questionnaire aims to determine the suitability for containerization for each application. It covers all the different areas of the *application landscape*, including the *technology*, *application lifecycle management*, and *operations*. This questionnaire allow the tool to identify and present potential risks that might prevent an application from running in containers or would require extra steps to mitigate the risk.
+**평가 모듈**은 설문지를 사용하여 주어진 애플리케이션 또는 아키타입에 대한 높은 수준의 개요를 제공합니다. 이 도구는 기본적으로 _컨테이너화_ 설문지를 제공하며, 이후 릴리스에서는 더 많은 큐레이팅된 설문지가 제공됩니다. _컨테이너화_ 설문지는 각 애플리케이션에 대한 컨테이너화 적합성을 판단하는 것을 목표로 합니다. 여기에는 *기술*, *애플리케이션 수명 주기 관리*, *운영* 을 포함한 *애플리케이션 환경* 의 모든 영역이 포함됩니다. 이 설문지를 통해 도구는 컨테이너에서 애플리케이션을 실행하지 못하게 하거나 위험을 완화하기 위한 추가 단계가 필요한 잠재적 위험을 식별하고 제시할 수 있습니다.
 
-=== 2.5.1. Enabling the Containerization questionnaire
+=== 2.5.1. 컨테이너화 설문지 활성화
 
-All questionnaires are disabled by default on a brand new *MTA* install to allow users to define which questionnaires should be answered by the user to consider an application as _assessed_. **MTA 7** now includes https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/7.0/html-single/user_interface_guide/index#mta-custom-questionnaire_user-interface-guide[the possibility of authoring custom questionnaires by using a YAML syntax^], but we will stick to the default _Containerization_ questionnaire for this exercise.
+모든 설문지는 새로운 *MTA* 설치에서 기본적으로 비활성화되어 사용자가 애플리케이션을 _평가_ 하기 위해 사용자가 답변해야 하는 설문지를 정의할 수 있습니다. **MTA 7**에는 이제 https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/7.0/html-single/user_interface_guide/index#mta-custom-questionnaire_user-interface-guide[YAML 구문을 사용하여 사용자 정의 설문지를 작성할 수 있는 가능성^]이 포함되지만, 이 연습에서는 기본 _컨테이너화_ 설문지를 고수하겠습니다.
 
-Click on the *perspective selector* on the left menu and select `Administration`. Once the perspective shifts, click on `Assessment Questionnaires`.
+왼쪽 메뉴에서 *perspective selector* 를 클릭하고 `Administration` 을 선택합니다. 관점이 바뀌면 `Assessment Questionnaires` (평가 설문지)를 클릭합니다.
 
 image::mta-questionnaires.png[questionnaires]
 
-This table shows you the list of available questionnaires, with information about number of questions and the different thresholds for all risk levels. The _Legacy Pathfinder_ questionnaire contains the containerization questions we are looking for, so click on the switch from the _Required_ column to enable it.
+이 표는 사용 가능한 설문지 목록을 보여줍니다. 여기에는 질문 수와 모든 위험 수준에 대한 다양한 임계값에 대한 정보가 있습니다. _Legacy Pathfinder_ 설문지에는 우리가 찾고 있는 컨테이너화 질문이 포함되어 있으므로 _필수_ 열에서 스위치를 클릭하여 활성화합니다.
 
 image::mta-questionnaires-enabled.png[questionnaires]
 
-This means that, for applications on this MTA instance to be considered as _assessed_, only the _Legacy Pathfinder_ (AKA _Containerization_) questionnaire has to be answered at either application or archetype level.
+즉, 이 MTA 인스턴스의 애플리케이션이 _평가_ 된 것으로 간주되려면 애플리케이션이나 아키타입 수준에서 _Legacy Pathfinder_(일명 _컨테이너화_) 설문지에만 답해야 합니다.
 
-Click on the perspective selector and select _Migration_ to get back to the _Application Inventory_
+관점 선택기를 클릭하고 _Migration_ 을 선택하여 _Application Inventory_ 로 돌아가세요.
 
 image::mta-intentory-assessed.png[questionnaires]
 
-You will notice that several applications, including our _Customers_ application, now appear to have they assessments completed. This is because some applications were already assessed in this MTA instance.
+_Customers_ 애플리케이션을 포함한 여러 애플리케이션이 이제 평가가 완료된 것으로 보입니다. 이는 일부 애플리케이션이 이 MTA 인스턴스에서 이미 평가되었기 때문입니다.
 
-=== 2.5.2. Completing the assessment for the Summer Framework archetype
+=== 2.5.2. Summer Framework 아키타입에 대한 평가 완료
 
-As we were discussing before, one stakeholder team has already assessed the _Summer Framework_ archetype to identify technical problems. However, they couldn't answer the configuration model questions during the first assessment. So they just left the answer as `Unknown` at that time.
+이전에 논의했듯이, 한 이해 관계자 팀은 이미 _Summer Framework_ 아키타입을 평가하여 기술적 문제를 파악했습니다. 그러나 첫 번째 평가에서 구성 모델 질문에 답할 수 없었습니다. 그래서 그들은 그 당시에 답을 `Unknown` 으로 남겨 두었습니다.
 
-Today, you'll run the *second* assessment to choose the proper answer in the `cross-cutting concerns` section for the _Summer Framework_ archetype.
+오늘은 _Summer Framework_ 아키타입의 `cross-cutting concerns` 섹션에서 적절한 답을 선택하기 위한 *두 번째* 평가를 실행하겠습니다.
 
-Click on the _Archetypes_ option in the left menu, and then click on the kebab menu (the three vertical dots) for the _Summer Framework_ archetype and select the _Assess_ option.
+왼쪽 메뉴에서 _Archetypes_ 옵션을 클릭한 다음, _Summer Framework_ 아키타입에 대한 햄버거 메뉴(세 개의 수직 점)를 클릭하고 _Assess_ 옵션을 선택합니다.
 
 image::mta-assessment-summer.png[archetypes]
 
-The system will navigate to a view with a list of the available questionnaires for the _Summer Framework_ archetype. Since the assessment was already done, you will get the options to either _Retake_ the questionnaire or view the previous results.
+시스템은 _Summer Framework_ 아키타입에 사용 가능한 설문지 목록이 있는 뷰로 이동합니다. 평가가 이미 완료되었으므로 설문지를 _Retake_ 하거나 이전 결과를 볼 수 있는 옵션이 제공됩니다.
 
 image::mta-assessment-summer-options.png[assessment]
 
-Click on _Retake_.
+_Retake_ 를 클릭하세요.
 
-You can think of an questionnaire as the script for having a meaningful conversation. As that conversation will potentially involve multiple stakeholders, it is important to document them in case it is necessary to reach out later to ask for clarifications.
+설문지는 의미 있는 대화를 위한 대본이라고 생각할 수 있습니다. 그 대화에는 잠재적으로 여러 이해 관계자가 포함될 수 있으므로 나중에 설명을 요청하기 위해 연락해야 하는 경우를 대비해 이를 문서화하는 것이 중요합니다.
 
 image::mta-assessment-stakeholders.png[assessment]
 
-You can see that Brendon Hayes, Dante Leblanc and Hanna Miriam were involved in this conversation, as well as the IT Management team. Click on `Next` to begin with the questionnaire.
+Brendon Hayes, Dante Leblanc, Hanna Miriam이 이 대화에 참여했고 IT 관리팀도 참여했음을 알 수 있습니다. `Next` 를 클릭하여 설문지를 시작합니다.
 
 [NOTE]
 ====
-Review the former answers in the initial assessment for each section such as `Details`, `Dependencies`, and `Observability`. You don't need to change any answers but keep clicking on `Next` button until you get into the `Application cross-cutting concerns` section.
+각 섹션의 초기 평가에서 이전 답변을 검토하세요. (예를 들어 `Details`, `Dependencies`, `Observability`) 답변을 변경할 필요는 없지만 `Application cross-cutting concerns` 섹션에 도달할 때까지  `Next` 버튼을 계속 클릭하세요.
 ====
 
 image::mta-assessment-app-details.png[app-details]
 
-Once you arrive to the _Application cross-cutting concerns_ section, choose the following answer for the *How is the application configured?* question. The team finally figured out that applications from the _Summer Framework_ archetype currently use multiple configuration files in different folders/directories, so answer accordingly:
+_Application cross-cutting concern_ 섹션에 도착하면 *How is the application organized?* 질문에 대한 다음 답변을 선택하세요. 팀은 마침내 _Summer Framework_ 아키타입의 애플리케이션이 현재 다른 폴더/디렉토리에 여러 구성 파일을 사용한다는 것을 알아냈으므로 그에 따라 답변하세요.
 
-* *Question* - How is the application configured?
-* *Answer* - `Multiple configuration files in multiple file system locations`
+* *질문* - How is the application organized? (이 애플리케이션은 어떻게 구성되어 있나요?)
+* *답변* - `Multiple configuration files in multiple file system locations` (다중 파일 시스템 위치에 있는 다중 구성 파일)
 
 image::mta-assessment-app-cross-cutting-concerns.png[app-cross-cutting-concerns]
 
-Click on `Save and review`.
+`Save and review` 를 클릭하세요.
 
-== 2.6. Application Review
+== 2.6. 애플리케이션 리뷰
 
-You will be presented with the review screen. It allows you to find out which risks were identified during the assessment and decide which migration strategy to follow based those risks.
+리뷰 화면이 표시됩니다. 이를 통해 평가 중에 식별된 위험을 파악하고 해당 위험에 따라 어떤 마이그레이션 전략을 따를지 결정할 수 있습니다.
 
 image::mta-review.png[review]
 
-In our assessment, MTA found some medium and high risks, we can take a look at them by scrolling down to the list of risks.The _Summer Framework_ archetype uses a static (fixed) discovery mechanism that is not cloud-friendly, which makes sense since it comes from a classic platform and accesses a database through a *static IP*.
+평가 결과, MTA는 중간 및 높은 위험을 발견했으며, 위험 목록으로 스크롤하여 해당 위험을 살펴볼 수 있습니다. _Summer Framework_ 아키타입은 클라우드 친화적이지 않은 정적(고정) 검색 메커니즘을 사용하는데, 이는 클래식 플랫폼에서 제공되며 *정적 IP*를 통해 데이터베이스에 액세스하기 때문에 당연한 일입니다.
 
-As stated before, the archetype also uses a custom configuration library that happens to load configuration from multiple paths on the filesystem. That is definitely an antippattern for cloud deployments, so we will need to find where that library is used in associated applications and replace it with a more cloud friendly approach.
+앞서 언급했듯이, 아키타입은 또한 파일 시스템의 여러 경로에서 구성을 로드하는 사용자 지정 구성 라이브러리를 사용합니다. 이는 확실히 클라우드 배포를 위한 안티패턴이므로, 해당 라이브러리가 연관된 애플리케이션에서 사용되는 곳을 찾아 클라우드에 더 친화적인 접근 방식으로 대체해야 합니다.
 
 image::mta-review-risks.png[review-risks]
 
-Now that we know that there will be some changes required in the source code to adapt applications associated to this archetype, we can decide that the strategy will be `Refactor`.
+이제 이 아키타입과 관련된 애플리케이션을 적용하기 위해 소스 코드에 몇 가지 변경이 필요하다는 것을 알았으므로 전략을 리팩토링(`Refactor`)으로 결정할 수 있습니다.
 
-We believe that only the configuration library needs to be replaced, so we would expect the effort required to be `Small`.
+우리는 구성 라이브러리만 교체하면 된다고 생각하므로 필요한 노력은 적을(`Small`) 것으로 예상합니다.
 
-* Proposed action: `Refactor`
-* Effort estimate: `Small`
+* 제안된 작업: `Refactor`
+* 추정 노력 : `Small`
 
-Since the _Summer Framework_ archetype is used to build critical applications for the business, we're going to set the criticality to `10` and priority to `9`.
+_Summer Framework_ 아키타입은 비즈니스에 중요한 애플리케이션을 구축하는 데 사용되므로 중요도를 `10` 으로, 우선순위를 `9` 로 설정합니다.
 
-* Business criticality: `10`
-* Work priority: `9`
+* 비즈니스 중요도 : `10`
+* 작업 우선순위 : `9`
 
-Click on `Submit Review`.
+`Submit Review` 를 클릭하세요.
 
 image::mta-submit-review.png[submit-review]
 
-As discussed before, applications associated to an archetype will inherit some of its properties, **including the assessment and the review**. Click on the _Application Inventory_ option in the left menu, then click on the _Customers_ application. On the _Archetypes_ section from the _Application Profile_ you can see that the associated archetype (_Summer Framework_) appears to be both assessed and reviewed. The _Customers_ application also has the _Completed_ status on its _Assessment_ and _Review_ columns.
+이전에 논의했듯이, 아키타입에 연관된 애플리케이션은 **평가 및 검토를 포함하여** 일부 속성을 상속합니다. 왼쪽 메뉴에서 _Application Inventory_ 옵션을 클릭한 다음 _Customers_ 애플리케이션을 클릭합니다. _Application Profile_ 의 _Archetypes_ 섹션에서 연관된 아키타입(_Summer Framework_)이 평가되고 검토된 것으로 보입니다. _Customers_ 애플리케이션은 또한 _Assessment_ 및 _Review_ 열에 _Completed_ 상태로 있습니다.
 
 image::mta-complete-review.png[complete-review]
 
-Now click on the _Review_ tab from the _Application Profile_. As you can see, the values we assigned in the review for the _Summer Framework_ archetype have been inherited by the _Customers_ application.
+이제 _Application Profile_ 에서 _Review_ 탭을 클릭합니다. 보시다시피, _Summer Framework_ 아키타입에 대한 검토에서 할당한 값이 _Customers_ 애플리케이션에 상속되었습니다.
 
 image::mta-complete-review-values.png[complete-review]
 
-To see an aggregated view of assessment data across the entire portfolio, go to the `Report` option on the left menu.
+포트폴리오 전체의 평가 데이터를 집계하여 보려면 왼쪽 메뉴의 `Report` 옵션으로 이동하세요.
 
 image::mta-report-review.png[report-review]
 
-*Congratulations!* You have now successfully begun the modernization process by assessing the _Summer Framework_ archetype, and you identified issues and risks that will need to be considered in the next step: application analysis and code modification as part of modernization.
+== 축하합니다!
 
-Read more about use cases and migration paths at https://developers.redhat.com/products/mta/use-cases[Migration Toolkit for Applications^].
+이제 _Summer Framework_ 아키타입을 평가하여 현대화 프로세스를 성공적으로 시작했으며, 다음 단계인 현대화의 일환으로 애플리케이션 분석 및 코드 수정에서 고려해야 할 문제점과 위험을 식별했습니다.
 
-== Congratulations!
-
-You have now successfully begun the modernization process by assessing the current application portfolio and you identified issues and risks that will need to be considered in the next step: application analysis and code modification as part of modernization.
-
-Read more about use cases and migration paths at https://developers.redhat.com/products/mta/use-cases[Migration Toolkit for Applications^].
+https://developers.redhat.com/products/mta/use-cases[애플리케이션용 마이그레이션 툴킷^]에서 사용 사례 및 마이그레이션 경로에 대한 자세한 내용을 읽어보세요.
