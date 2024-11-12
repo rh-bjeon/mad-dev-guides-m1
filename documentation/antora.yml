@@ -1,6 +1,6 @@
 name: mad-dev-guides-m1
-title: Module 1 - Assessment and Analysis
+title: Module 1 - 평가와 분석
 version: main
 nav:
   - modules/ROOT/nav.adoc
-start_page: ROOT:1-introduction.adoc
+start_page: ROOT:1-introduction-kor.adoc
