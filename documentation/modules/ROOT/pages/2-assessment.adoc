@@ -34,13 +34,13 @@ image::application-inventory.png[application inventory]
 
 자세한 내용은 https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/7.0/html/user_interface_guide/working-with-applications-in-the-ui#mta-web-creating-migration-waves_user-interface-guide[마이그레이션 웨이브 생성^] 및 https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/7.0/html/user_interface_guide/working-with-applications-in-the-ui#mta-web-creating-jira-issues-for-migration-wave_user-interface-guide[마이그레이션 웨이브에 대한 Jira 이슈 생성^]을 참조하세요.
 
-== 2.2. 컨트롤(Controls)
+== 2.2. 컨트롤
 
 *컨트롤(Controls)* 은 Application Inventory와 Pathfinder 평가에 가치를 더하는 엔터티 모음입니다. 여기에는 _비즈니스 서비스_, _이해 관계자_, _이해 관계자 그룹_, _직무 기능_, _태그 유형_, _태그_ 가 포함됩니다.
 
 이러한 컨트롤(Controls)의 기능은 애플리케이션과 비즈니스 이해 관계자 간의 관계에 대한 유용한 메타데이터를 제공하며, 포트폴리오 전반에 걸쳐 현대화 계획을 최적화하는 데 사용할 수 있습니다.
 
-=== 2.2.1. 이해관계자(Stakeholders)
+=== 2.2.1. 이해관계자
 
 왼쪽 메뉴에서 `Controls` 로 가면 *Hank Scorpio* 와 *Homer Simpson* 같은 기존 _이해관계자(Stakeholders)_ 를 볼 수 있습니다.
 
@@ -50,15 +50,15 @@ image::mta-control-stakeholder.png[stakeholders]
 
 image::mta-stakeholder-groups.png[stakeholder-groups]
 
-=== 2.2.2. 비즈니스 서비스(Business services)
+=== 2.2.2. 비즈니스 서비스
 
-애플리케이션은 **비즈니스 서비스**와 같이 여러 가지 방법으로 분류 및 그룹화할 수 있습니다. 우리는 레거시 `Retail` 애플리케이션에 대한 비즈니스 서비스를 만들었습니다.
+애플리케이션은 **비즈니스 서비스(Business services)**와 같이 여러 가지 방법으로 분류 및 그룹화할 수 있습니다. 우리는 레거시 `Retail` 애플리케이션에 대한 비즈니스 서비스를 만들었습니다.
 
 왼쪽 메뉴에서 `Controls` 로 가서 _Business services_ 탭을 클릭하세요. *Finance and HR* 과 *Retail* 과 같은 기존 _business services_ 가 보일 것입니다.
 
 image::mta-control-business-service.png[business service]
 
-== 2.3. 애플리케이션 인벤토리(Application inventory)
+== 2.3. 애플리케이션 인벤토리
 
 레거시 애플리케이션에 집중해 보겠습니다. `Java`, `Tomcat`, `PostgreSQL` 과 같이 해당 기술을 나타내는 태그를 추가했고, 각 애플리케이션에서 어떤 사용자 정의 아키텍처 라이브러리를 사용하는지 식별할 수 있는 사용자 정의 태그 유형을 추가하기로 했습니다.
 
@@ -72,9 +72,9 @@ image::mta-customer-tags.png[mta-customer-tags]
 
 `x` 버튼을 클릭하세요.
 
-== 2.4. 아키타입(Archetypes)
+== 2.4. 아키타입
 
-대규모 애플리케이션을 다룰 때, 대규모 포트폴리오를 효과적으로 관리하기 위해 애플리케이션을 그룹화하는 보다 정교한 방법이 필요할 수 있습니다. **아키타입**은 태그 택소노미에 따라 애플리케이션을 자동으로 분류하여 정확히 이를 허용합니다. 동시에, 아키타입과 연관된 애플리케이션은 추가 태그나 평가 데이터와 같은 일부 기능을 상속합니다.
+대규모 애플리케이션을 다룰 때, 대규모 포트폴리오를 효과적으로 관리하기 위해 애플리케이션을 그룹화하는 보다 정교한 방법이 필요할 수 있습니다. **아키타입(Archetypes)**은 태그 택소노미에 따라 애플리케이션을 자동으로 분류하여 정확히 이를 허용합니다. 동시에, 아키타입과 연관된 애플리케이션은 추가 태그나 평가 데이터와 같은 일부 기능을 상속합니다.
 
 image::mta-archetypes.png[archetypes]
 
